@@ -5,11 +5,13 @@ function FormularioCadastro() {
   const [nome, setNome] = useState("");
   const [sobrenome, setSobrenome] = useState("");
   const [cpf, setCpf] = useState("");
+  const [promocoes, setPromocoes] = useState(true);
+  const [novidades, setNovidades] = useState(true);
   return (
     <form
       onSubmit={(event) => {
         event.preventDefault();
-        console.log(nome, sobrenome, cpf);
+        console.log({ nome, sobrenome, cpf, promocoes, novidades });
       }}
     >
       <TextField
@@ -51,10 +53,25 @@ function FormularioCadastro() {
       />
 
       <FormControlLabel
-        control={<Switch defaultChecked color="primary" />}
+        control={
+          <Switch
+            checked={promocoes}
+            onChange={(event) => {
+              setPromocoes(event.target.checked);
+            }}
+            
+            color="primary"
+          />
+        }
         label="Promoções"
       />
-      <FormControlLabel control={<Switch defaultChecked />} label="Novidades" />
+      <FormControlLabel
+        onChange={(event) => {
+          setNovidades(event.target.checked);
+        }}
+        control={<Switch checked={novidades}  />}
+        label="Novidades"
+      />
 
       <Button variant="contained" color="primary" type="submit">
         Cadastrar
