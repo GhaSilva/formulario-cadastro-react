@@ -26,6 +26,7 @@ function DadosPessoais({aoEnviar, validarCPF}) {
         fullWidth
         margin="normal"
         type="text"
+        required
       />
       <TextField
         value={sobrenome}
@@ -38,6 +39,7 @@ function DadosPessoais({aoEnviar, validarCPF}) {
         fullWidth
         margin="normal"
         type="text"
+        required
       />
       <TextField
         value={cpf}
@@ -57,6 +59,7 @@ function DadosPessoais({aoEnviar, validarCPF}) {
         type="number"
         id="CPF"
         label="CPF"
+        required
         variant="outlined"
         fullWidth
         margin="normal"
@@ -84,7 +87,7 @@ function DadosPessoais({aoEnviar, validarCPF}) {
       />
 
       <Button variant="contained" color="primary" type="submit">
-        Cadastrar
+        Próximo
       </Button>
     </form>
   );

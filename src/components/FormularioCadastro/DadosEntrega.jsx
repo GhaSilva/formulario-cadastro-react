@@ -10,25 +10,29 @@ function DadosEntrega() {
         fullWidth
         id="endereco"
         label="Endereço"
-        type="text"
+        type="text" 
+        required
       ></TextField>
       <TextField
         margin="normal"
         id="numero"
         label="Número"
         type="number"
+        required
       ></TextField>
       <TextField
         margin="normal"
         id="estado"
         label="Estado"
         type="text"
+        required
       ></TextField>
       <TextField
         margin="normal"
         id="cidade"
         label="Cidade"
         type="text"
+        required
       ></TextField>
       <Button fullWidth variant="contained" color="primary" type="submit">
         Finalizar Cadastro
