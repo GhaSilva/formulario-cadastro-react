@@ -1,18 +1,38 @@
 import React, { useState } from "react";
 import { Button, TextField, FormControlLabel, Switch } from "@material-ui/core";
 
-function DadosPessoais({aoEnviar, validarCPF}) {
+function DadosPessoais({ aoEnviar, validacoes }) {
   const [nome, setNome] = useState("");
   const [sobrenome, setSobrenome] = useState("");
   const [cpf, setCpf] = useState("");
   const [promocoes, setPromocoes] = useState(true);
   const [novidades, setNovidades] = useState(true);
-  const [erros, setErros] = useState({cpf:{valido:true, texto:""}})
+  const [erros, setErros] = useState({ cpf: { valido: true, texto: "" }, nome:{valido:true, texto:""}});
+
+
+  function validarCampos(event) {
+    const { name, value } = event.target;
+    const novoEstado = { ...erros };
+    novoEstado[name] = validacoes[name](value);
+    setErros(novoEstado);
+  }
+
+  function possoEnviar() {
+    for (let campo in erros) {
+      if (!erros[campo].valido) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   return (
     <form
       onSubmit={(event) => {
         event.preventDefault();
-        aoEnviar({nome, sobrenome, cpf, novidades, promocoes})
+        if (possoEnviar()) {
+          aoEnviar({ nome, sobrenome, cpf, novidades, promocoes });
+        }
       }}
     >
       <TextField
@@ -20,6 +40,10 @@ function DadosPessoais({aoEnviar, validarCPF}) {
         onChange={(event) => {
           setNome(event.target.value);
         }}
+        onBlur={validarCampos}
+        error={!erros.nome.valido}
+        helperText={erros.nome.texto}
+        name="nome"
         id="nome"
         label="Nome"
         variant="outlined"
@@ -50,14 +74,12 @@ function DadosPessoais({aoEnviar, validarCPF}) {
           }
           setCpf(tmpCpf);
         }}
-        onBlur={(event) => {
-          const isValido = validarCPF(cpf)
-          setErros({cpf: isValido})
-        }}
+        onBlur={validarCampos}
         error={!erros.cpf.valido}
         helperText={erros.cpf.texto}
         type="number"
         id="CPF"
+        name="cpf"
         label="CPF"
         required
         variant="outlined"
@@ -72,7 +94,6 @@ function DadosPessoais({aoEnviar, validarCPF}) {
             onChange={(event) => {
               setPromocoes(event.target.checked);
             }}
-            
             color="primary"
           />
         }
@@ -82,7 +103,7 @@ function DadosPessoais({aoEnviar, validarCPF}) {
         onChange={(event) => {
           setNovidades(event.target.checked);
         }}
-        control={<Switch checked={novidades}  />}
+        control={<Switch checked={novidades} />}
         label="Novidades"
       />
 
